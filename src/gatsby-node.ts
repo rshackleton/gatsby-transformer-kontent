@@ -1,52 +1,59 @@
-import * as crypto from 'crypto';
-import { GatsbyNode, Node, NodeInput } from 'gatsby';
+import { CreateResolversArgs } from 'gatsby';
+import { createRemoteFileNode, FileSystemNode } from 'gatsby-source-filesystem';
 
-const onCreateNode: GatsbyNode['onCreateNode'] = ({
-  node,
-  actions,
-  createNodeId,
-  getNode,
-}) => {
-  // @todo: Would prefer to use mediaType but this is null on Kontent nodes.
-  //        So instead using a partial match on the type name.
-  if (!node.internal.type.startsWith('KontentItem')) {
-    return;
-  }
-
-  const { createNode, createParentChildLink } = actions;
-
-  // Create our new node's data object - separated so it can be hashed.
-  const fieldData = {
-    test: 'hello world!',
-  };
-
-  // Create dependant node id.
-  const testNodeId: string = createNodeId(`${node.id}__TestNode`);
-
-  // Create node input data.
-  const testNodeInput: NodeInput = {
-    ...fieldData,
-
-    id: testNodeId,
-    parent: node.id,
-    children: [],
-    internal: {
-      contentDigest: crypto
-        .createHash(`md5`)
-        .update(JSON.stringify(fieldData))
-        .digest(`hex`),
-      type: 'TestNode',
-    },
-  };
-
-  // Create new gatsby node.
-  createNode(testNodeInput);
-
-  // Get created node - needed to satisfy `createParentChildLink` signature.
-  const testNode: Node = getNode(testNodeId);
-
-  // Create connection between original node and new child node.
-  createParentChildLink({ parent: node, child: testNode });
+const DEFAULT_OPTIONS: PluginOptions = {
+  local: false,
 };
 
-export { onCreateNode };
+const createResolvers = (
+  args: CreateResolversArgs,
+  pluginOptions: PluginOptions,
+): Promise<void> => {
+  const {
+    actions,
+    cache,
+    createNodeId,
+    createResolvers,
+    store,
+    reporter,
+  } = args;
+
+  const options = resolveOptions(pluginOptions);
+
+  if (options.local) {
+    const { createNode } = actions;
+
+    createResolvers({
+      KontentAsset: {
+        imageFile: {
+          type: `File`,
+          resolve(source: KontentAsset): Promise<FileSystemNode> {
+            return createRemoteFileNode({
+              url: source.url,
+              store,
+              cache,
+              createNode,
+              createNodeId,
+              reporter,
+            });
+          },
+        },
+      },
+    });
+  }
+
+  return Promise.resolve();
+};
+
+export { createResolvers };
+
+/**
+ * Combine plugin options with default options.
+ * @param options The combined options.
+ */
+function resolveOptions(options: PluginOptions): PluginOptions {
+  return {
+    ...DEFAULT_OPTIONS,
+    ...options,
+  };
+}
