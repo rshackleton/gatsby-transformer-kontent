@@ -1,0 +1,9 @@
+{
+  "name": "gatsby-transformer-kontent",
+  "version": "0.1.0",
+  "description": "Transforms assets from Kontent.ai into nodes usable by Gatsby Image",
+  "main": "index.js",
+  "repository": "https://github.com/rshackleton/gatsby-transformer-kontent.git",
+  "author": "Richard Shackleton <richardshackleton@netconstruct.co.uk>",
+  "license": "MIT"
+}
