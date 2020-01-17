@@ -1,15 +1,38 @@
 {
   "name": "gatsby-transformer-kontent",
-  "version": "0.1.0",
   "description": "Transforms assets from Kontent.ai into nodes usable by Gatsby Image",
-  "main": "index.js",
-  "repository": "https://github.com/rshackleton/gatsby-transformer-kontent.git",
+  "version": "0.1.0",
   "author": "Richard Shackleton <richardshackleton@netconstruct.co.uk>",
-  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rshackleton/gatsby-transformer-kontent/issues"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",
+    "cross-env": "^6.0.3",
     "eslint": "^6.8.0",
+    "prettier": "^1.19.1",
     "typescript": "^3.7.5"
+  },
+  "homepage": "https://github.com/rshackleton/gatsby-transformer-kontent/tree/master#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin",
+    "kontent"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "gatsby": "^2.18.25"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rshackleton/gatsby-transformer-kontent.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "eslint src/**/*",
+    "prepare": "cross-env NODE_ENV=production npm run build"
   }
 }
