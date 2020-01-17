@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-transformer-kontent",
+  "name": "@rshackleton/gatsby-transformer-kontent",
   "description": "Transforms assets from Kontent.ai into nodes usable by Gatsby Image",
   "version": "0.1.0-alpha.0",
   "author": "Richard Shackleton <richardshackleton@netconstruct.co.uk>",
