@@ -1,0 +1,8 @@
+# Ignore dependencies
+node_modules
+
+# Ignore secrets
+*.env
+
+# Ignore compiled files
+gatsby-*.js
