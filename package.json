@@ -1,7 +1,7 @@
 {
   "name": "gatsby-transformer-kontent",
   "description": "Transforms assets from Kontent.ai into nodes usable by Gatsby Image",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha.0",
   "author": "Richard Shackleton <richardshackleton@netconstruct.co.uk>",
   "bugs": {
     "url": "https://github.com/rshackleton/gatsby-transformer-kontent/issues"
@@ -13,6 +13,7 @@
     "cross-env": "^6.0.3",
     "eslint": "^6.8.0",
     "gatsby": "^2.18.25",
+    "gatsby-source-filesystem": "^2.1.46",
     "prettier": "^1.19.1",
     "typescript": "^3.7.5"
   },
@@ -24,7 +25,8 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "gatsby": "^2.18.25"
+    "gatsby": "^2.18.25",
+    "gatsby-source-filesystem": "^2.1.46"
   },
   "repository": {
     "type": "git",
