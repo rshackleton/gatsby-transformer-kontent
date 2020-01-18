@@ -7,6 +7,7 @@
     "url": "https://github.com/rshackleton/gatsby-transformer-kontent/issues"
   },
   "dependencies": {
+    "@kentico/kontent-delivery": "^8.2.0",
     "gatsby-plugin-sharp": "^2.3.13",
     "gatsby-source-filesystem": "^2.1.46"
   },

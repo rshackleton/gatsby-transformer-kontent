@@ -1,13 +1,17 @@
 import { CreateResolversArgs, GatsbyNode } from 'gatsby';
 import { createRemoteFileNode, FileSystemNode } from 'gatsby-source-filesystem';
+import { ImageUrlBuilder, ImageFitModeEnum } from '@kentico/kontent-delivery';
 
 import { resolveOptions } from './resolveOptions';
 import {
   CustomPluginOptions,
   KontentAsset,
   KontentAssetFixed,
+  KontentAssetFixedArgs,
   KontentAssetFluid,
   KontentAssetResize,
+  KontentAssetResizeArgs,
+  KontentAssetFluidArgs,
 } from './types';
 
 /**
@@ -37,18 +41,49 @@ const createResolvers: GatsbyNode['createResolvers'] = (
       fixed: {
         type: `KontentAssetFixed`,
         args: {
-          width: 'Int',
+          fit: 'String',
+          format: 'String',
           height: 'Int',
+          quality: 'Int',
+          width: 'Int',
         },
-        async resolve(source: KontentAsset): Promise<KontentAssetFixed> {
-          throw new Error('"fixed" is currently unsupported.');
+        async resolve(
+          source: KontentAsset,
+          args: KontentAssetFixedArgs,
+        ): Promise<KontentAssetFixed> {
+          const { width, height } = calculateAdjustedSize({
+            fit: args.fit || ImageFitModeEnum.Clip,
+            originalHeight: source.height,
+            originalWidth: source.width,
+            targetHeight: args.height,
+            targetWidth: args.width,
+          });
+
+          let builder = new ImageUrlBuilder(source.url)
+            .withWidth(width)
+            .withHeight(height);
+
+          if (args.fit) {
+            builder = builder.withFitMode(args.fit);
+          }
+
+          if (args.format) {
+            builder = builder.withFormat(args.format);
+          }
+
+          if (args.quality) {
+            builder = builder.withQuality(args.quality);
+          }
+
+          const src = builder.getUrl();
+
           return {
-            aspectRatio: 0,
+            aspectRatio: width / height,
             base64: '',
-            height: 0,
-            src: '',
-            srcSet: '',
-            width: 0,
+            height: height,
+            src: src,
+            srcSet: src,
+            width: width,
           };
         },
       },
@@ -59,7 +94,10 @@ const createResolvers: GatsbyNode['createResolvers'] = (
           maxHeight: 'Int',
           srcSetBreakpoints: '[Int!]',
         },
-        async resolve(source: KontentAsset): Promise<KontentAssetFluid> {
+        async resolve(
+          source: KontentAsset,
+          args: KontentAssetFluidArgs,
+        ): Promise<KontentAssetFluid> {
           throw new Error('"fluid" is currently unsupported.');
           return {
             aspectRatio: 0,
@@ -73,18 +111,49 @@ const createResolvers: GatsbyNode['createResolvers'] = (
       resize: {
         type: `KontentAssetResize`,
         args: {
-          width: 'Int',
-          height: 'Int',
           base64: 'Boolean',
+          height: 'Int',
+          fit: 'String',
+          format: 'String',
+          quality: 'Int',
+          width: 'Int',
         },
-        async resolve(source: KontentAsset): Promise<KontentAssetResize> {
-          throw new Error('"resize" is currently unsupported.');
+        async resolve(
+          source: KontentAsset,
+          args: KontentAssetResizeArgs,
+        ): Promise<KontentAssetResize> {
+          const { width, height } = calculateAdjustedSize({
+            fit: args.fit || ImageFitModeEnum.Clip,
+            originalHeight: source.height,
+            originalWidth: source.width,
+            targetHeight: args.height,
+            targetWidth: args.width,
+          });
+
+          let builder = new ImageUrlBuilder(source.url)
+            .withWidth(width)
+            .withHeight(height);
+
+          if (args.fit) {
+            builder = builder.withFitMode(args.fit);
+          }
+
+          if (args.format) {
+            builder = builder.withFormat(args.format);
+          }
+
+          if (args.quality) {
+            builder = builder.withQuality(args.quality);
+          }
+
+          const src = builder.getUrl();
+
           return {
-            aspectRatio: 0,
+            aspectRatio: width / height,
             base64: '',
-            height: 0,
-            src: '',
-            width: 0,
+            height: height,
+            src: src,
+            width: width,
           };
         },
       },
@@ -118,3 +187,45 @@ const createResolvers: GatsbyNode['createResolvers'] = (
 };
 
 export default createResolvers;
+
+function calculateAdjustedSize({
+  fit,
+  originalHeight,
+  originalWidth,
+  targetHeight,
+  targetWidth,
+}: {
+  fit: ImageFitModeEnum;
+  originalHeight: number;
+  originalWidth: number;
+  targetHeight: number;
+  targetWidth: number;
+}): { width: number; height: number } {
+  let width = 0;
+  let height = 0;
+
+  // Get adjusted width.
+  if (targetWidth > originalWidth) {
+    const scaleRatio = originalWidth / targetWidth;
+    width = scaleRatio * targetWidth;
+  } else {
+    width = targetWidth;
+  }
+
+  // Get adjusted height.
+  if (fit === ImageFitModeEnum.Clip || !targetHeight) {
+    const aspectRatio = originalWidth / originalHeight;
+    height = width / aspectRatio;
+  } else if (targetHeight > originalHeight) {
+    const scaleRatio = originalHeight / targetHeight;
+    height = scaleRatio * targetHeight;
+    width = scaleRatio * width;
+  } else {
+    height = targetHeight;
+  }
+
+  width = Math.round(width);
+  height = Math.round(height);
+
+  return { height, width };
+}
