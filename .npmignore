@@ -36,6 +36,8 @@ examples
 # Project specific
 src
 .editorconfig
-.eslintrc.json
+.eslintignore
+.eslintrc.js
+.prettierignore
 .prettierrc
 tsconfig.json
