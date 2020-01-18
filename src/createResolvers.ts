@@ -1,13 +1,18 @@
-import { CreateResolversArgs } from 'gatsby';
+import { CreateResolversArgs, GatsbyNode } from 'gatsby';
 import { createRemoteFileNode, FileSystemNode } from 'gatsby-source-filesystem';
 
-const DEFAULT_OPTIONS: PluginOptions = {
-  local: false,
-};
+import { resolveOptions } from './resolveOptions';
+import { CustomPluginOptions, KontentAsset } from './types';
 
-const createResolvers = (
+/**
+ * Add custom field resolvers to the GraphQL schema.
+ * @param args
+ * @param pluginOptions
+ * @see https://www.gatsbyjs.org/docs/node-apis/#createResolvers
+ */
+const createResolvers: GatsbyNode['createResolvers'] = (
   args: CreateResolversArgs,
-  pluginOptions: PluginOptions,
+  pluginOptions: CustomPluginOptions,
 ): Promise<void> => {
   const {
     actions,
@@ -46,14 +51,3 @@ const createResolvers = (
 };
 
 export { createResolvers };
-
-/**
- * Combine plugin options with default options.
- * @param options The combined options.
- */
-function resolveOptions(options: PluginOptions): PluginOptions {
-  return {
-    ...DEFAULT_OPTIONS,
-    ...options,
-  };
-}

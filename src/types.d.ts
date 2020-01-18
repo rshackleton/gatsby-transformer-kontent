@@ -1,7 +1,9 @@
+import { PluginOptions } from 'gatsby';
+
 /**
  * The plugin options.
  */
-interface PluginOptions {
+interface CustomPluginOptions extends PluginOptions {
   local: boolean;
 }
 

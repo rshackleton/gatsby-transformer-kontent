@@ -35,6 +35,7 @@ examples
 
 # Project specific
 src
+*.ts
 .editorconfig
 .eslintignore
 .eslintrc.js
