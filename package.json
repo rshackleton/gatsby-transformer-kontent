@@ -7,6 +7,7 @@
     "url": "https://github.com/rshackleton/gatsby-transformer-kontent/issues"
   },
   "devDependencies": {
+    "@types/jest": "^24.9.0",
     "@types/node": "^13.1.8",
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",
@@ -14,7 +15,9 @@
     "eslint": "^6.8.0",
     "gatsby": "^2.18.25",
     "gatsby-source-filesystem": "^2.1.46",
+    "jest": "^24.9.0",
     "prettier": "^1.19.1",
+    "ts-jest": "^24.3.0",
     "typescript": "^3.7.5"
   },
   "homepage": "https://github.com/rshackleton/gatsby-transformer-kontent/tree/master#readme",
@@ -37,7 +40,7 @@
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "eslint src/**/*",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --passWithNoTests",
     "watch": "tsc -w",
     "prepare": "cross-env NODE_ENV=production npm run build",
     "prepublishOnly": "npm test && npm run lint",
