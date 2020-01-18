@@ -19,3 +19,20 @@ interface KontentAsset {
   width: number;
   height: number;
 }
+
+interface KontentAssetFixed {
+  aspectRatio: number;
+  base64: string!;
+  height: number;
+  src: string;
+  srcSet: string;
+  width: number;
+}
+
+interface KontentAssetFluid {
+  aspectRatio: number!;
+  base64: string!;
+  sizes: string!;
+  src: string!;
+  srcSet: string!;
+}
