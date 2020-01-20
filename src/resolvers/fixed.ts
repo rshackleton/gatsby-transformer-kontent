@@ -5,6 +5,8 @@ import {
   KontentAssetFixed,
 } from '../types';
 
+const DEFAULT_SIZES = [1, 1.5, 2];
+
 const fixedResolver = {
   type: `KontentAssetFixed`,
   args: {
@@ -18,20 +20,28 @@ const fixedResolver = {
     source: KontentAsset,
     args: KontentAssetFixedArgs,
   ): Promise<KontentAssetFixed> {
-    const { height, url, width } = getAssetUrl(
-      source,
-      args.width,
-      args.height,
-      args,
-    );
+    const srcs = DEFAULT_SIZES.map(size => {
+      const { height, url, width } = getAssetUrl(
+        source,
+        args.width * size,
+        args.height * size,
+        args,
+      );
+
+      return { height, size, src: url, width };
+    });
+
+    const src1x = srcs[0];
+
+    const srcSet = srcs.map(({ size, src }) => `${src} ${size}x`).join(', ');
 
     return {
-      aspectRatio: width / height,
+      aspectRatio: src1x.width / src1x.height,
       base64: '',
-      height,
-      src: url,
-      srcSet: `${url} 1x, ${url} 2x`,
-      width,
+      height: src1x.height,
+      src: src1x.src,
+      srcSet: srcSet,
+      width: src1x.width,
     };
   },
 };
