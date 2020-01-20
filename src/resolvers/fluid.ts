@@ -26,13 +26,13 @@ const fluidResolver = {
         args,
       );
 
-      return { height, size, src: url, width };
+      return { height, size: args.maxWidth * size, src: url, width };
     });
 
     // @todo: Make sure this gets the 1x size.
     const src1x = srcs[2];
 
-    const srcSet = srcs.map(({ size, src }) => `${src} ${size}x`).join(', ');
+    const srcSet = srcs.map(({ size, src }) => `${src} ${size}w`).join(', ');
 
     return {
       aspectRatio: src1x.width / src1x.height,
