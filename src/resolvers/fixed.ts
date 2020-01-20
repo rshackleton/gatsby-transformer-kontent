@@ -24,7 +24,7 @@ const fixedResolver = {
       const { height, url, width } = getAssetUrl(
         source,
         args.width * size,
-        args.height * size,
+        (args.height || 0) * size,
         args,
       );
 

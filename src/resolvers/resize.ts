@@ -22,7 +22,7 @@ const resizeResolver = {
     const { height, url, width } = getAssetUrl(
       source,
       args.width,
-      args.height,
+      args.height || 0,
       args,
     );
 

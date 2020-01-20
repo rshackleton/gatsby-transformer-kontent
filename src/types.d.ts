@@ -29,7 +29,7 @@ interface KontentAssetArgs {
 
 interface KontentAssetFixed {
   aspectRatio: number;
-  base64: string!;
+  base64: string;
   height: number;
   src: string;
   srcSet: string;
@@ -37,34 +37,34 @@ interface KontentAssetFixed {
 }
 
 interface KontentAssetFixedArgs extends KontentAssetArgs {
-  height: number;
-  width: number!;
+  height?: number;
+  width: number;
 }
 
 interface KontentAssetFluid {
-  aspectRatio: number!;
-  base64: string!;
-  sizes: string!;
-  src: string!;
-  srcSet: string!;
+  aspectRatio: number;
+  base64: string;
+  sizes: string;
+  src: string;
+  srcSet: string;
 }
 
 interface KontentAssetFluidArgs extends KontentAssetArgs {
-  maxHeight: number;
-  maxWidth: number!;
-  srcSetBreakpoints: number[];
+  maxHeight?: number;
+  maxWidth: number;
+  srcSetBreakpoints?: number[];
 }
 
 interface KontentAssetResize {
-  aspectRatio: number!;
-  base64: string!;
-  height: number!;
-  src: string!;
-  width: number!;
+  aspectRatio: number;
+  base64: string;
+  height: number;
+  src: string;
+  width: number;
 }
 
 interface KontentAssetResizeArgs extends KontentAssetArgs {
-  base64: boolean;
-  height: number;
-  width: number!;
+  base64?: boolean;
+  height?: number;
+  width: number;
 }

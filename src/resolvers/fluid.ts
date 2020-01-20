@@ -22,7 +22,7 @@ const fluidResolver = {
       const { height, url, width } = getAssetUrl(
         source,
         args.maxWidth * size,
-        args.maxHeight * size,
+        (args.maxHeight || 0) * size,
         args,
       );
 
