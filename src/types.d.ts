@@ -21,6 +21,12 @@ interface KontentAsset {
   height: number;
 }
 
+interface KontentAssetArgs {
+  fit: ImageFitModeEnum;
+  format: ImageFormatEnum;
+  quality: number;
+}
+
 interface KontentAssetFixed {
   aspectRatio: number;
   base64: string!;
@@ -30,12 +36,9 @@ interface KontentAssetFixed {
   width: number;
 }
 
-interface KontentAssetFixedArgs {
-  width: number!;
+interface KontentAssetFixedArgs extends KontentAssetArgs {
   height: number;
-  fit: ImageFitModeEnum;
-  quality: number;
-  format: ImageFormatEnum;
+  width: number!;
 }
 
 interface KontentAssetFluid {
@@ -46,12 +49,9 @@ interface KontentAssetFluid {
   srcSet: string!;
 }
 
-interface KontentAssetFluidArgs {
-  fit: ImageFitModeEnum;
-  format: ImageFormatEnum;
+interface KontentAssetFluidArgs extends KontentAssetArgs {
   maxHeight: number;
   maxWidth: number!;
-  quality: number;
   srcSetBreakpoints: number[];
 }
 
@@ -63,11 +63,8 @@ interface KontentAssetResize {
   width: number!;
 }
 
-interface KontentAssetResizeArgs {
-  width: number!;
-  height: number;
-  fit: ImageFitModeEnum;
+interface KontentAssetResizeArgs extends KontentAssetArgs {
   base64: boolean;
-  quality: number;
-  format: ImageFormatEnum;
+  height: number;
+  width: number!;
 }
