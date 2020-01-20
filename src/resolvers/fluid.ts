@@ -5,6 +5,8 @@ import {
   KontentAssetFluid,
 } from '../types';
 
+const DEFAULT_SIZES = [0.25, 0.5, 1, 1.5, 2];
+
 const fluidResolver = {
   type: `KontentAssetFluid`,
   args: {
@@ -16,19 +18,28 @@ const fluidResolver = {
     source: KontentAsset,
     args: KontentAssetFluidArgs,
   ): Promise<KontentAssetFluid> {
-    const { height, url, width } = getAssetUrl(
-      source,
-      args.maxWidth,
-      args.maxHeight,
-      args,
-    );
+    const srcs = DEFAULT_SIZES.map(size => {
+      const { height, url, width } = getAssetUrl(
+        source,
+        args.maxWidth * size,
+        args.maxHeight * size,
+        args,
+      );
+
+      return { height, size, src: url, width };
+    });
+
+    // @todo: Make sure this gets the 1x size.
+    const src1x = srcs[2];
+
+    const srcSet = srcs.map(({ size, src }) => `${src} ${size}x`).join(', ');
 
     return {
-      aspectRatio: width / height,
+      aspectRatio: src1x.width / src1x.height,
       base64: '',
-      sizes: '',
-      src: url,
-      srcSet: `${url} 1x, ${url} 2x`,
+      sizes: `(max-width: ${args.maxWidth}px) 100vw, ${args.maxWidth}px`,
+      src: src1x.src,
+      srcSet: srcSet,
     };
   },
 };
