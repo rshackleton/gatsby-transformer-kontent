@@ -1,6 +1,6 @@
 import { graphql } from 'gatsby';
 
-export const kontentAssetFixed = graphql`
+export const KontentAssetFixed = graphql`
   fragment KontentAssetFixed on KontentAssetFixed {
     base64
     height
@@ -10,7 +10,7 @@ export const kontentAssetFixed = graphql`
   }
 `;
 
-export const kontentAssetFluid = graphql`
+export const KontentAssetFluid = graphql`
   fragment KontentAssetFluid on KontentAssetFluid {
     aspectRatio
     base64
