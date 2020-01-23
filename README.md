@@ -1,15 +1,15 @@
-# gatsby-transformer-kontent
+# gatsby-transformer-kontent-image
 
 Converts assets from [Kentico Kontent](https://kontent.ai/) to nodes that can be consumed by [`gatsby-image`](https://www.gatsbyjs.org/packages/gatsby-image/).
 
 ## Install
 
 ```
-npm install --save @rshackleton/gatsby-transformer-kontent
+npm install --save @rshackleton/gatsby-transformer-kontent-image
 ```
 
 ```
-yarn add @rshackleton/gatsby-transformer-kontent
+yarn add @rshackleton/gatsby-transformer-kontent-image
 ```
 
 ## How to use
@@ -20,7 +20,7 @@ Add the plugin to your `gatsby-config.js`:
 module.exports = {
   plugins: [
     {
-      resolve: `@rshackleton/gatsby-transformer-kontent`,
+      resolve: `@rshackleton/gatsby-transformer-kontent-image`,
       options: {
         // See "Options" below.
       },
@@ -37,7 +37,7 @@ The plugin currently supports a single option to create local `File` nodes that 
 module.exports = {
   plugins: [
     {
-      resolve: `@rshackleton/gatsby-transformer-kontent`,
+      resolve: `@rshackleton/gatsby-transformer-kontent-image`,
       options: {
         local: true,
       },

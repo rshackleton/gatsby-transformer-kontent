@@ -1,10 +1,10 @@
 {
-  "name": "@rshackleton/gatsby-transformer-kontent",
+  "name": "@rshackleton/gatsby-transformer-kontent-image",
   "description": "Transforms assets from Kontent.ai into nodes usable by Gatsby Image",
   "version": "0.1.0-alpha.9",
   "author": "Richard Shackleton <richardshackleton@netconstruct.co.uk>",
   "bugs": {
-    "url": "https://github.com/rshackleton/gatsby-transformer-kontent/issues"
+    "url": "https://github.com/rshackleton/gatsby-transformer-kontent-image/issues"
   },
   "dependencies": {
     "@kentico/kontent-delivery": "^8.2.0",
@@ -26,7 +26,7 @@
     "ts-jest": "24.3.0",
     "typescript": "3.7.5"
   },
-  "homepage": "https://github.com/rshackleton/gatsby-transformer-kontent/tree/master#readme",
+  "homepage": "https://github.com/rshackleton/gatsby-transformer-kontent-image/tree/master#readme",
   "keywords": [
     "gatsby",
     "gatsby-plugin",
@@ -38,7 +38,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/rshackleton/gatsby-transformer-kontent.git"
+    "url": "https://github.com/rshackleton/gatsby-transformer-kontent-image.git"
   },
   "main": "index.js",
   "scripts": {
