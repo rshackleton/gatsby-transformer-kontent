@@ -43,7 +43,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "format": "prettier --write \"*.ts\" \"*.js\"",
     "lint": "eslint src/**/*",
     "test": "jest --passWithNoTests",
     "watch": "tsc -w",

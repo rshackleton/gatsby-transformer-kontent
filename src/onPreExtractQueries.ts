@@ -13,7 +13,7 @@ const onPreExtractQueries: GatsbyNode['onPreExtractQueries'] = async args => {
   const program: { directory: string } = store.getState().program;
 
   await fs.copy(
-    require.resolve(`./fragments.js`),
+    require.resolve(`../fragments.js`),
     `${program.directory}/.cache/fragments/kontent-asset-fragments.js`,
   );
 };

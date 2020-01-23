@@ -39,4 +39,6 @@ examples
 .eslintrc.js
 .prettierignore
 .prettierrc
+jest.config.js
+renovate.json
 tsconfig.json
