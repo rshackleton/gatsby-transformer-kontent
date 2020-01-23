@@ -1,6 +1,6 @@
 import { ImageFitModeEnum, ImageUrlBuilder } from '@kentico/kontent-delivery';
 
-import { KontentAssetArgs, KontentAsset } from './types';
+import { KontentAsset, KontentAssetArgs, KontentRichTextImage } from './types';
 
 /**
  * Calculate adjusted image size
@@ -82,7 +82,7 @@ function createUrlBuilder(
  * @param args The GraphQL resolver arguments
  */
 function getAssetUrl(
-  source: KontentAsset,
+  source: KontentAsset | KontentRichTextImage,
   targetWidth: number,
   targetHeight: number,
   args: KontentAssetArgs,

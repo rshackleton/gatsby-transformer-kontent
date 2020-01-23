@@ -1,8 +1,9 @@
 import { getAssetUrl } from '../imageUtils';
 import {
   KontentAsset,
-  KontentAssetFixedArgs,
   KontentAssetFixed,
+  KontentAssetFixedArgs,
+  KontentRichTextImage,
 } from '../types';
 
 const DEFAULT_SIZES = [1, 1.5, 2];
@@ -17,7 +18,7 @@ const fixedResolver = {
     width: 'Int',
   },
   async resolve(
-    source: KontentAsset,
+    source: KontentAsset | KontentRichTextImage,
     args: KontentAssetFixedArgs,
   ): Promise<KontentAssetFixed> {
     const srcs = DEFAULT_SIZES.map(size => {

@@ -3,7 +3,11 @@ import { createRemoteFileNode, FileSystemNode } from 'gatsby-source-filesystem';
 
 import { resolveOptions } from './resolveOptions';
 import { fluidResolver, fixedResolver, resizeResolver } from './resolvers';
-import { CustomPluginOptions, KontentAsset } from './types';
+import {
+  CustomPluginOptions,
+  KontentAsset,
+  KontentRichTextImage,
+} from './types';
 
 /**
  * Add custom field resolvers to the GraphQL schema.
@@ -33,6 +37,11 @@ const createResolvers: GatsbyNode['createResolvers'] = (
       fluid: fluidResolver,
       resize: resizeResolver,
     },
+    KontentRichTextImage: {
+      fixed: fixedResolver,
+      fluid: fluidResolver,
+      resize: resizeResolver,
+    },
   });
 
   // Extend `KontentAsset` type with field for local `File` node.
@@ -44,6 +53,21 @@ const createResolvers: GatsbyNode['createResolvers'] = (
         localFile: {
           type: `File`,
           resolve(source: KontentAsset): Promise<FileSystemNode> {
+            return createRemoteFileNode({
+              url: source.url,
+              store,
+              cache,
+              createNode,
+              createNodeId,
+              reporter,
+            });
+          },
+        },
+      },
+      KontentRichTextImage: {
+        localFile: {
+          type: `File`,
+          resolve(source: KontentRichTextImage): Promise<FileSystemNode> {
             return createRemoteFileNode({
               url: source.url,
               store,

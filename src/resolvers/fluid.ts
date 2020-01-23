@@ -1,8 +1,9 @@
 import { getAssetUrl } from '../imageUtils';
 import {
   KontentAsset,
-  KontentAssetFluidArgs,
   KontentAssetFluid,
+  KontentAssetFluidArgs,
+  KontentRichTextImage,
 } from '../types';
 
 const DEFAULT_SIZES = [0.25, 0.5, 1, 1.5, 2];
@@ -15,7 +16,7 @@ const fluidResolver = {
     srcSetBreakpoints: '[Int!]',
   },
   async resolve(
-    source: KontentAsset,
+    source: KontentAsset | KontentRichTextImage,
     args: KontentAssetFluidArgs,
   ): Promise<KontentAssetFluid> {
     const srcs = DEFAULT_SIZES.map(size => {

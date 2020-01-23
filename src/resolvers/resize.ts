@@ -1,8 +1,9 @@
 import { getAssetUrl } from '../imageUtils';
 import {
   KontentAsset,
-  KontentAssetResizeArgs,
   KontentAssetResize,
+  KontentAssetResizeArgs,
+  KontentRichTextImage,
 } from '../types';
 
 const resizeResolver = {
@@ -16,7 +17,7 @@ const resizeResolver = {
     width: 'Int',
   },
   async resolve(
-    source: KontentAsset,
+    source: KontentAsset | KontentRichTextImage,
     args: KontentAssetResizeArgs,
   ): Promise<KontentAssetResize> {
     const { height, url, width } = getAssetUrl(

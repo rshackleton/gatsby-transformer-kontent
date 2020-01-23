@@ -21,6 +21,17 @@ interface KontentAsset {
   height: number;
 }
 
+/**
+ * A Kentico Kontent rich text image.
+ */
+interface KontentRichTextImage {
+  description?: string;
+  imageId: string;
+  url: string;
+  width: number;
+  height: number;
+}
+
 interface KontentAssetArgs {
   fit: ImageFitModeEnum;
   format: ImageFormatEnum;
