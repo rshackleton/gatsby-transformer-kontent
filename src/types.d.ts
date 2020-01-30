@@ -1,5 +1,5 @@
-import { PluginOptions } from 'gatsby';
 import { ImageFitModeEnum, ImageFormatEnum } from '@kentico/kontent-delivery';
+import { PluginOptions } from 'gatsby';
 
 /**
  * The plugin options.
@@ -44,6 +44,8 @@ interface KontentAssetFixed {
   height: number;
   src: string;
   srcSet: string;
+  srcWebp: string;
+  srcSetWebp: string;
   width: number;
 }
 
@@ -58,6 +60,8 @@ interface KontentAssetFluid {
   sizes: string;
   src: string;
   srcSet: string;
+  srcWebp: string;
+  srcSetWebp: string;
 }
 
 interface KontentAssetFluidArgs extends KontentAssetArgs {
