@@ -15,6 +15,8 @@ const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = (
       height: Float
       src: String
       srcSet: String
+      srcWebp: String
+      srcSetWebp: String
       width: Float
     }
 
@@ -24,6 +26,8 @@ const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = (
       sizes: String!
       src: String!
       srcSet: String!
+      srcWebp: String
+      srcSetWebp: String
     }
 
     type KontentAssetResize {

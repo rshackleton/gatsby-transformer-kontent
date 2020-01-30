@@ -1,5 +1,5 @@
 import { ImageFitModeEnum, ImageUrlBuilder } from '@kentico/kontent-delivery';
-
+import axios from 'axios';
 import { KontentAsset, KontentAssetArgs, KontentRichTextImage } from './types';
 
 /**
@@ -106,4 +106,45 @@ function getAssetUrl(
   return { height, url: builder.getUrl(), width };
 }
 
-export { calculateAdjustedSize, createUrlBuilder, getAssetUrl };
+/**
+ * Get the base64 encoded data URI for the provided arguments.
+ * @param url The base Kontent asset URL
+ * @param args The GraphQL resolver arguments
+ */
+async function getBase64(
+  source: KontentAsset | KontentRichTextImage,
+  targetWidth: number,
+  targetHeight: number,
+  args: KontentAssetArgs,
+): Promise<string> {
+  const { height, width } = calculateAdjustedSize({
+    fit: args.fit,
+    originalHeight: source.height,
+    originalWidth: source.width,
+    targetHeight,
+    targetWidth,
+  });
+
+  const builder = createUrlBuilder(source.url, args)
+    .withWidth(width)
+    .withHeight(height);
+
+  const url = builder.getUrl();
+
+  if (process.env.GATSBY_TRANSFORMER_KONTENT_DEBUG) {
+    console.log(`Fetch: ${url}.`);
+  }
+
+  // @todo: Add caching for base64 images.
+  const result = await axios.get(url, { responseType: 'arraybuffer' });
+
+  if (process.env.GATSBY_TRANSFORMER_KONTENT_DEBUG) {
+    console.log(`Fetch result: ${result.status} ${result.statusText}.`);
+  }
+
+  const data = Buffer.from(result.data).toString('base64');
+
+  return `data:image/jpeg;base64,${data}`;
+}
+
+export { calculateAdjustedSize, createUrlBuilder, getAssetUrl, getBase64 };
