@@ -1,4 +1,4 @@
-import { getAssetUrl } from '../imageUtils';
+import { getAssetUrl, getBase64 } from '../imageUtils';
 import {
   KontentAsset,
   KontentAssetResize,
@@ -6,13 +6,14 @@ import {
   KontentRichTextImage,
 } from '../types';
 
+const DEFAULT_BASE64_WIDTH = 30;
+
 const resizeResolver = {
   type: `KontentAssetResize`,
   args: {
-    base64: 'Boolean',
-    height: 'Int',
     fit: 'String',
     format: 'String',
+    height: 'Int',
     quality: 'Int',
     width: 'Int',
   },
@@ -20,6 +21,8 @@ const resizeResolver = {
     source: KontentAsset | KontentRichTextImage,
     args: KontentAssetResizeArgs,
   ): Promise<KontentAssetResize> {
+    const base64 = await getBase64(source, DEFAULT_BASE64_WIDTH, 0, args);
+
     const { height, url, width } = getAssetUrl(
       source,
       args.width,
@@ -29,7 +32,7 @@ const resizeResolver = {
 
     return {
       aspectRatio: width / height,
-      base64: '',
+      base64,
       height,
       src: url,
       width,

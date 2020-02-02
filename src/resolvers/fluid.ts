@@ -13,8 +13,11 @@ const DEFAULT_SIZES = [0.25, 0.5, 1, 1.5, 2];
 const fluidResolver = {
   type: `KontentAssetFluid`,
   args: {
+    fit: 'String',
+    format: 'String',
     maxWidth: 'Int',
     maxHeight: 'Int',
+    quality: 'Int',
     srcSetBreakpoints: '[Int!]',
   },
   async resolve(
